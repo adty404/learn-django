@@ -22,13 +22,13 @@
 			</p>
 		<![endif]-->
 		<h1>Meetups</h1>
-		<p>Here are all the meetups</p>
-		{% comment %}
-		<ul>
-			<li><a href="/meetups/1">Meetup 1</a></li>
-			<li><a href="/meetups/2">Meetup 2</a></li>
-			<li><a href="/meetups/3">Meetup 3</a></li>
-		</ul>
-		{% endcomment %}
+
+		{% if show_meetups %} {% for meetup in meetups %}
+		<div class="meetup">
+			<h2>{{ meetup.title }}</h2>
+		</div>
+		{% endfor %} {% else %}
+		<p>There are no meetups</p>
+		{% endif %}
 	</body>
 </html>
