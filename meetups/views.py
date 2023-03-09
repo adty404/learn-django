@@ -5,11 +5,10 @@ from django.shortcuts import render
 
 def index(request):
     meetups = [
-        {'title': 'A First Meetup'},
-        {'title': 'A Second Meetup'},
+        {'title': 'A First Meetup', 'location': 'London', 'slug': 'a-first-meetup'},
+        {'title': 'A Second Meetup', 'location': 'Paris', 'slug': 'a-second-meetup'},
     ]
 
     return render(request, 'meetups/index.html', {
-        'show_meetups': True,
-        'meetups': meetups,
+        'meetups': meetups
     })
