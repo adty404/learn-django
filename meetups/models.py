@@ -8,3 +8,7 @@ class Meetup(models.Model):
     slug = models.SlugField(unique=True)
     description = models.TextField()
     image = models.ImageField(upload_to='images')
+
+    # function to control what showing up or what we get as a result if we need this instance as a string
+    def __str__(self):
+        return f'{self.title} - {self.slug}'
