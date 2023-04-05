@@ -17,6 +17,7 @@ def index(request):
 def meetup_details(request, meetup_slug):
     try:
         selected_meetup = Meetup.objects.get(slug=meetup_slug)
+        participant_signed_up = False
         if request.method == 'GET':
             registration_form = RegistrationForm()
         else:
@@ -25,13 +26,17 @@ def meetup_details(request, meetup_slug):
                 user_email = registration_form.cleaned_data['email']
                 participant, _ = Participant.objects.get_or_create(
                     email=user_email)
-                selected_meetup.participants.add(participant)
-                return redirect('confirm-registration', meetup_slug=meetup_slug)
+                if selected_meetup.participants.filter(email=user_email).exists():
+                    participant_signed_up = True
+                else:
+                    selected_meetup.participants.add(participant)
+                    return redirect('confirm-registration', meetup_slug=meetup_slug)
 
         return render(request, 'meetups/meetup-details.html', {
             'meetup_found': True,
             'meetup': selected_meetup,
-            'form': registration_form
+            'form': registration_form,
+            'participant_signed_up': participant_signed_up,
         })
     except Exception as exc:
         print(exc)
